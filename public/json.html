@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>json</title>
+  <style>
+    h1 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div id="main">
+  <h1>OS Stats</h1>
+  <div id="status-charts"></div>
+</div>
+
+<!-- JavaScript -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script>
+  var elStatus = window.document.getElementById('status-charts');
+
+  var host = window.document.location.hostname;
+  var port = window.document.location.port;
+  var ws = new WebSocket('ws://' + host + ':' + port);
+  ws.onmessage = function (event) {
+    var data = JSON.parse(event.data);
+    updateStats(data);
+  };
+
+  function updateStats(data) {
+    var node = '<div id="status-charts"><pre>' + JSON.stringify(data, null, 2) + '</pre></div>';
+    elStatus.outerHTML = node;
+    elStatus = window.document.getElementById('status-charts');
+  }
+</script>
+</body>
+</html>

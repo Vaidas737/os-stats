@@ -1,0 +1,85 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/**********************
+ *    h1, h2, h3 ...  *
+ *********************/
+
+h1 {
+  color: #ADAFB3;
+  text-align: center;
+  font-weight: 100;
+  font-size: 2.75em;
+}
+
+h2#memory-pie-chart-title,
+h2#cpu-pie-chart-title {
+  font-weight: 100;
+  text-align: center;
+  font-size: 2.75em;
+  text-shadow: 0.1em 0.1em 0.3em #4C5056;
+  color: #f6f5fb;
+  margin: 10px 0 0 0;
+}
+h2#memory-pie-chart-title { color: #e2f0f3; }
+h2#cpu-pie-chart-title { color: #ffe0dc; }
+
+/*******************
+ *        UI       *
+ ******************/
+
+div#main {
+  display: block;
+  width: 1200px;
+  height: 1000px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-top: -500px;
+  margin-left: -600px;
+
+  /*font-family: Tahoma, Geneva, sans-serif;*/
+  /*background-image: linear-gradient(to left, #171a1f, #6b798f);*/
+
+  border-radius: 25px;
+}
+
+ul#status-charts {
+  position: relative;
+  display: block;
+  text-align: center;
+  height: 450px;
+  list-style: none;
+  margin: 50px 0 0 0;
+}
+
+ul#status-charts > li {
+  display: inline-block;
+  vertical-align: middle;
+  width: 320px;
+  height: 420px;
+  border-radius: 15px;
+  box-shadow: 0.4em 0.4em 1.5em #4C5056;
+  margin: 0 40px 0 40px;
+}
+
+#memory-pie-chart-holder {
+  background-image: linear-gradient(to left top, #00a8c9, #62d6eb);
+}
+
+#cpu-pie-chart-holder {
+  background-image: linear-gradient(to left top, #f1301a, #ff5440);
+}
