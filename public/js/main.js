@@ -26,7 +26,7 @@
     var data = JSON.parse(event.data);
 
     PieChartMemory.updateTick(normalizePerc(data.mem));
-    PieChartCpu.updateTick(normalizePerc(data.cpu));
+    PieChartCpu.updateTick(normalizePerc(data.cpu.total));
   };
 
   /////////////////////////
