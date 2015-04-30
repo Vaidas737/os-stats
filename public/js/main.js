@@ -10,15 +10,19 @@
 
   // D3 Pie Charts
   var PieChartMemory = new PieChart(elMemoryPieChart, {
-    backgroundArcStyle: { fill: "#72d8eb" },
-    foregroundArcStyle: { fill: "#e2f0f3" },
-    indicatorStyle: { fill: "#e2f0f3" }
-  }).draw();
+    backgroundArcStyle: { fill: "#72d8eb", filter: "false" },
+    foregroundArcStyle: { fill: "#e2f0f3", filter: "false" },
+    indicatorStyle: { fill: "#e2f0f3", filter: "false" }
+  });
   var PieChartCpu = new PieChart(elCpuPieChart, {
-    backgroundArcStyle: { fill:  "#f69589" },
-    foregroundArcStyle: { fill: "#ffe0dc" },
-    indicatorStyle: { fill: "#ffe0dc" }
-  }).draw();
+    backgroundArcStyle: { fill:  "#f69589", filter: "false" },
+    foregroundArcStyle: { fill: "#ffe0dc", filter: "false" },
+    indicatorStyle: { fill: "#ffe0dc", filter: "false" }
+  });
+
+  // Draw pie charts
+  PieChartMemory.draw().updateBackground(1000);
+  PieChartCpu.draw().updateBackground(1000);
 
   // WebSocket
   var ws = new WebSocket("ws://" + loc.hostname + ":" + loc.port);

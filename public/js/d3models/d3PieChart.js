@@ -1,19 +1,30 @@
-window.d3PieChart = (function(root) {
+window.d3PieChart = (function (root) {
 
   var d3 = root.d3;
 
-  function foregroundArcTween(transition, newPrc, p, foregroundArc) {
-    transition.attrTween("d", function(d) {
-      var interpolate = d3.interpolate(d.endAngle, (p / 100) * newPrc);
-      return function(t) {
-        d.endAngle = interpolate(t);
-        return foregroundArc(d);
-      };
+  function backgroundArcTween(transition, p, backgroundArc) {
+    transition.attrTween("d", function (d) {
+      return arcTween(d, backgroundArc, p);
     });
   }
 
+  function foregroundArcTween(transition, prc, p, foregroundArc) {
+    transition.attrTween("d", function (d) {
+      var endAngle = ( p / 100 ) *  prc;
+      return arcTween(d, foregroundArc, endAngle);
+    });
+  }
+
+  function arcTween(d, arc, endAngle) {
+    var interpolate = d3.interpolate(d.endAngle, endAngle);
+    return function(t) {
+      d.endAngle = interpolate(t);
+      return arc(d);
+    };
+  }
+
   function indicatorTween(transition, newPrc, prc) {
-    transition.tween("text", function() {
+    transition.tween("text", function () {
       var i = d3.interpolateNumber( prc, newPrc );
       return function(t) {
         var number = i(t);
@@ -33,6 +44,30 @@ window.d3PieChart = (function(root) {
     for (var attr in style) {
       selection.attr(attr, style[attr]);
     }
+  }
+
+  function appendFilterDropshadow(selection) {
+    var defs = selection.append("defs");
+
+    var filter = defs.append("filter").attr("id", "dropshadow");
+    filter.append("feGaussianBlur")
+      .attr("in", "SourceAlpha")
+      .attr("stdDeviation", 2);
+    filter.append("feOffset")
+      .attr("dx", 4)
+      .attr("dx", 4)
+      .attr("result", "offsetblur");
+    filter.append("feFlood")
+      .attr("flood-color", "#000")
+      .attr("flood-opacity", "0.5");
+    filter.append("feComposite")
+      .attr("in2", "offsetblur")
+      .attr("operator", "in");
+
+    var feMerge = filter.append("feMerge");
+    feMerge.append("feMergeNode");
+    feMerge.append("feMergeNode")
+      .attr("in", "SourceGraphic");
   }
 
   //////////////////////////
@@ -56,7 +91,7 @@ window.d3PieChart = (function(root) {
       "filter": "url(#dropshadow)",
       "text-anchor": "middle",
       "transform": "translate(0, 15)",
-      "font-size": "43px",
+      "font-size": "38px",
       "style": "font-weight: bold"
     }, opt.indicatorStyle);
 
@@ -91,32 +126,8 @@ window.d3PieChart = (function(root) {
       .append("g")
       .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    // start - filter
-    var defs = svg.append( 'defs' );
-
-    var filter = defs.append( 'filter' )
-      .attr( 'id', 'dropshadow' )
-
-    filter.append( 'feGaussianBlur' )
-      .attr( 'in', 'SourceAlpha' )
-      .attr( 'stdDeviation', 2 )
-      .attr( 'result', 'blur' );
-    filter.append( 'feOffset' )
-      .attr( 'in', 'blur' )
-      .attr( 'dx', 4 )
-      .attr( 'dy', 4 )
-      .attr( 'result', 'offsetBlur' );
-    filter.append("feComponentTransfer").append("feFuncA")
-      .attr("type", "linear")
-      .attr("slope", "0.2");
-
-    var feMerge = filter.append( 'feMerge' );
-
-    feMerge.append( 'feMergeNode' )
-      .attr( 'in", "offsetBlur' );
-    feMerge.append( 'feMergeNode' )
-      .attr( 'in', 'SourceGraphic' );
-    // end - filter
+    // Append filter (dropshadow)
+    svg.call(appendFilterDropshadow);
 
     // Components
     var background = null;
@@ -128,17 +139,27 @@ window.d3PieChart = (function(root) {
     //////////////////
 
     this.draw = function() {
+      // for some reasons if endAngle will be set as 0 for first time
+      // it will cause animation bug
+      var endAngle = 0.0001;
       background = svg.append("path")
-        .datum({endAngle: p}) // bind data to a single SVG element)
+        .datum({endAngle: endAngle})
         .attr("d", backgroundArc)
         .call(setStyle, backgroundArcStyle);
       foreground = svg.append("path")
-        .datum({endAngle: 0}) // bind data to a single SVG element
+        .datum({endAngle: endAngle})
         .attr("d", foregroundArc)
         .call(setStyle, foregroundArcStyle);
       indicator = svg.append("text")
         .text(prc + "%")
         .call(setStyle, indicatorStyle);
+      return this;
+    };
+
+    this.updateBackground = function (duration) {
+      background.transition()
+        .duration(duration)
+        .call(backgroundArcTween, p, backgroundArc);
       return this;
     };
 

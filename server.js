@@ -2,14 +2,14 @@ var WebSocketServer = require("ws").Server;
 var http = require("http");
 var express = require("express");
 
-var util = require("./lib/util.js");
+var cpuUtil = require("./lib/utils/cpuUtil.js");
 var wsController = require("./lib/controllers/websocketController.js");
 
 var app = express();
 var port = 8080;
 
 // start cpu stats calculation
-util.startCpuSequence();
+cpuUtil.startCpuSequence();
 
 // set public directory
 app.use(express.static(__dirname + "/public"));
