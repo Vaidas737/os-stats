@@ -1,4 +1,4 @@
-window.d3LineChart = (function (root) {
+window.d3AreaChart = (function (root) {
 
   var d3 = root.d3;
 
@@ -21,7 +21,7 @@ window.d3LineChart = (function (root) {
   /**
    * LineChart Object
    */
-  function LineChart(el) {
+  function AreaChart(el) {
 
     var width = el.clientWidth - 20;
     var height = el.clientHeight - 20;
@@ -113,5 +113,5 @@ window.d3LineChart = (function (root) {
     };
   }
 
-  return LineChart;
+  return AreaChart;
 })(window);

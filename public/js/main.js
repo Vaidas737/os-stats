@@ -3,17 +3,17 @@
   var doc = root.document;
   var loc = doc.location;
   var d3PieChart = root.d3PieChart;
-  var d3LineChart = root.d3LineChart;
+  var d3AreaChart = root.d3AreaChart;
 
   // DOM elements
   var elLineChart = doc.getElementById("line-chart");
   var elPieChartCpu = doc.getElementById("cpu-pie-chart");
   var elPieChartMemory = doc.getElementById("memory-pie-chart");
 
-  // D3 Line Charts
-  var LineChart = new d3LineChart(elLineChart);
-  var LineChartCpu = LineChart.appendChart({ color: "red" });
-  var LineChartMemory = LineChart.appendChart({ color: "blue" });
+  // D3 Area Charts
+  var AreaChart = new d3AreaChart(elLineChart);
+  var AreaChartCpu = AreaChart.appendChart({ color: "red" });
+  var AreaChartMemory = AreaChart.appendChart({ color: "blue" });
 
   // D3 Pie Charts
   var PieChartCpu = new d3PieChart(elPieChartCpu, {
@@ -27,9 +27,9 @@
     indicatorStyle: { fill: "#e2f0f3", filter: "false" }
   });
 
-  // Draw line charts
-  LineChartCpu.draw().startTick();
-  LineChartMemory.draw().startTick();
+  // Draw area charts
+  AreaChartCpu.draw().startTick();
+  AreaChartMemory.draw().startTick();
 
   // Draw pie charts
   PieChartCpu.draw().updateBackground(1000);
@@ -43,8 +43,8 @@
     PieChartMemory.updateTick(normalizePerc(data.mem), 1000);
     PieChartCpu.updateTick(normalizePerc(data.cpu), 1000);
 
-    LineChartMemory.setData(normalizePerc(data.mem));
-    LineChartCpu.setData(normalizePerc(data.cpu));
+    AreaChartMemory.setData(normalizePerc(data.mem));
+    AreaChartCpu.setData(normalizePerc(data.cpu));
   };
 
   /////////////////////////
