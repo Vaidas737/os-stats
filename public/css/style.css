@@ -43,13 +43,28 @@ div#main {
   display: block;
   width: 1200px;
   height: 1000px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -500px;
-  margin-left: -600px;
+  margin: auto;
+  /*position: absolute;*/
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*margin-top: -500px;*/
+  /*margin-left: -600px;*/
   /*background-image: linear-gradient(to left, #171a1f, #6b798f);*/
-  border-radius: 25px;
+  /*border-radius: 25px;*/
+}
+
+.line-chart-holder {
+  position: relative;
+  display: block;
+  text-align: center;
+  width: 800px;
+  height: 400px;
+  margin: 50px auto 0 auto;
+}
+
+#line-chart {
+  width: inherit;
+  height: inherit;
 }
 
 ul#status-charts {

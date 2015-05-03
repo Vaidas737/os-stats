@@ -8,9 +8,9 @@ window.d3PieChart = (function (root) {
     });
   }
 
-  function foregroundArcTween(transition, prc, p, foregroundArc) {
+  function foregroundArcTween(transition, newPrc, p, foregroundArc) {
     transition.attrTween("d", function (d) {
-      var endAngle = ( p / 100 ) *  prc;
+      var endAngle = ( p / 100 ) *  newPrc;
       return arcTween(d, foregroundArc, endAngle);
     });
   }
@@ -46,10 +46,9 @@ window.d3PieChart = (function (root) {
     }
   }
 
-  function appendFilterDropshadow(selection) {
-    var defs = selection.append("defs");
-
-    var filter = defs.append("filter").attr("id", "dropshadow");
+  function appendFilterDropshadow(defs) {
+    var filter = defs.append("filter")
+      .attr("id", "dropshadow");
     filter.append("feGaussianBlur")
       .attr("in", "SourceAlpha")
       .attr("stdDeviation", 2);
@@ -70,10 +69,9 @@ window.d3PieChart = (function (root) {
       .attr("in", "SourceGraphic");
   }
 
-  //////////////////////////
-  //    PieChart Object   //
-  //////////////////////////
-
+  /**
+   * PieChart Object
+   */
   function PieChart(el, opt) {
 
     opt = opt || {};
@@ -83,7 +81,7 @@ window.d3PieChart = (function (root) {
     var height = el.clientWidth - 20;
 
     var p = 2 * Math.PI;
-    var r = (width/2) - 10;
+    var r = (width / 2) - 10;
 
     // Indicator Style
     var indicatorStyle = merge({
@@ -124,10 +122,10 @@ window.d3PieChart = (function (root) {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    // Append filter (dropshadow)
-    svg.call(appendFilterDropshadow);
+    var defs = svg.append("defs");
+    defs.call(appendFilterDropshadow);
 
     // Components
     var background = null;
@@ -163,13 +161,13 @@ window.d3PieChart = (function (root) {
       return this;
     };
 
-    this.updateTick = function (memoryUsage) {
+    this.updateTick = function (memoryUsage, duration) {
       var newPrc = memoryUsage;
       foreground.transition()
-        .duration(750)
+        .duration(duration)
         .call(foregroundArcTween, newPrc, p, foregroundArc);
       indicator.transition()
-        .duration(750)
+        .duration(duration)
         .call(indicatorTween, newPrc, prc);
       prc = newPrc;
       return this;
@@ -178,4 +176,3 @@ window.d3PieChart = (function (root) {
 
   return PieChart;
 })(window);
-

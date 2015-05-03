@@ -3,10 +3,15 @@
 <head>
   <title>OS Stats</title>
   <link href="css/style.css" rel="stylesheet">
+  <link href="d3Models/lineChart/d3LineChart.css" rel="stylesheet">
+  <link href="d3Models/pieChart/d3PieChart.css" rel="stylesheet">
 </head>
 <body>
 <div id="main">
   <h1>OS Stats</h1>
+  <div class="line-chart-holder">
+    <div id="line-chart"></div>
+  </div>
   <ul id="status-charts">
     <li id="cpu-pie-chart-holder">
       <div id="cpu-pie-chart"></div>
@@ -21,7 +26,8 @@
 
 <!-- JavaScript -->
 <script src="lib/d3/d3.min.js"></script>
-<script src="js/d3models/d3PieChart.js"></script>
+<script src="d3Models/lineChart/d3LineChart.js"></script>
+<script src="d3Models/pieChart/d3PieChart.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
