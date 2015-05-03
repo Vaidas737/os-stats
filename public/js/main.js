@@ -41,10 +41,10 @@
     var data = JSON.parse(event.data);
 
     PieChartMemory.updateTick(normalizePerc(data.mem), 1000);
-    PieChartCpu.updateTick(normalizePerc(data.cpu.total), 1000);
+    PieChartCpu.updateTick(normalizePerc(data.cpu), 1000);
 
     LineChartMemory.setData(normalizePerc(data.mem));
-    LineChartCpu.setData(normalizePerc(data.cpu.total));
+    LineChartCpu.setData(normalizePerc(data.cpu));
   };
 
   /////////////////////////
