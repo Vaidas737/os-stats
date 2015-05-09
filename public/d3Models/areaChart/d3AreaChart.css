@@ -15,3 +15,7 @@
   fill: rgba(0, 168, 201, 0.7);
   stroke: #62d6eb;
 }
+
+.area-chart .axis.x path {
+  fill: none;
+}

@@ -140,17 +140,18 @@ window.d3AreaChart = (function (root) {
 
     // Append time axis group
     var xGroup = svg.append("g")
+      .attr("class", "axis x")
       .attr("transform", "translate(0, " + (height - margin.bottom) + ")")
       .call(xAxis);
 
     // Append area group
-    var yGroup = svg.append("g")
+    var areaGroup = svg.append("g")
       .attr("clip-path", "url(#clip)")
       .attr("transform", "translate(0, " + - margin.top +  ")");
 
     this.appendChart = function (charOptions) {
       charOptions = charOptions || {};
-      return new Path(yGroup, area, xGroup, xAxis, xScale, duration, charOptions);
+      return new Path(areaGroup, area, xGroup, xAxis, xScale, duration, charOptions);
     };
   };
 
