@@ -36,7 +36,6 @@ window.d3AreaChart = (function (root) {
         .ease("linear");
 
     function update() {
-
       var now = new Date();
       timeScale.domain([now - 60000, now]);
 
@@ -48,7 +47,16 @@ window.d3AreaChart = (function (root) {
         .attr("transform", null);
 
       // slide time scale left
-      timeAxis.call(xAxis);
+      timeAxis.call(xAxis).each(function() {
+        var g = d3.select(this).selectAll("g.tick");
+        g.each(function() {
+          var n = d3.select(this);
+          var t = d3.transform(n.attr("transform"));
+          if (t.translate[0] < 0) {
+            n.remove();
+          }
+        });
+      });
 
       // slide the are left
       path
