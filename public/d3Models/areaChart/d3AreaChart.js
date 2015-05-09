@@ -2,12 +2,15 @@ window.d3AreaChart = (function (root) {
 
   var d3 = root.d3;
 
-  var BUFFER_SIZE = 62;
+  var BUFFER_SIZE = 63;
+
+  var TIME_SCALE_RANGE = 1000; // 1min.
 
   function generateBuffer(data) {
-    var buffer = [];
-    for (var i = 0; i < BUFFER_SIZE; i++, buffer.push(data));
-    return buffer;
+    //var buffer = [];
+    //for (var i = 0; i < BUFFER_SIZE; i++, buffer.push(data));
+    //return buffer;
+    return d3.range(BUFFER_SIZE).map(function() { return 0; });
   }
 
   function appendClipPath(defs, width, height) {
@@ -16,6 +19,11 @@ window.d3AreaChart = (function (root) {
       .append("rect")
         .attr("width", width)
         .attr("height", height);
+  }
+
+  function getTimeRange() {
+    var now = new Date();
+    return [now - (BUFFER_SIZE - 2) * TIME_SCALE_RANGE, now - BUFFER_SIZE];
   }
 
   /**
@@ -35,33 +43,37 @@ window.d3AreaChart = (function (root) {
         .duration(1000)
         .ease("linear");
 
+    function clearTimeScaleOverflow() {
+      // NOTE: {this} refers to DOM element.
+      var g = d3.select(this).selectAll("g.tick");
+      g.each(function() {
+        var n = d3.select(this);
+        var t = d3.transform(n.attr("transform"));
+        var x = t.translate[0];
+        if (x < 0) { n.remove(); }
+      });
+    }
+
     function update() {
+
+      // update time scale
       var now = new Date();
-      timeScale.domain([now - 60000, now]);
+      timeScale.domain([now - (BUFFER_SIZE - 3) * TIME_SCALE_RANGE, now]);
 
       buffer.push(newData);
 
-      // redraw the area
       path
         .attr("d", area)
         .attr("transform", null);
 
       // slide time scale left
-      timeAxis.call(xAxis).each(function() {
-        var g = d3.select(this).selectAll("g.tick");
-        g.each(function() {
-          var n = d3.select(this);
-          var t = d3.transform(n.attr("transform"));
-          if (t.translate[0] < 0) {
-            n.remove();
-          }
-        });
-      });
+      timeAxis.call(xAxis).each(clearTimeScaleOverflow);
 
-      // slide the are left
+      // redraw the area and slide left
       path
         .transition()
-          .attr("transform", "translate(" + xScale(0) + ", 0)");
+          //.attr("transform", "translate(" + xScale(0) + ", 0)");
+          .attr("transform", "translate(" + timeScale(now - (BUFFER_SIZE - 2) * TIME_SCALE_RANGE) + ", 0)");
 
       buffer.shift();
     }
@@ -111,16 +123,18 @@ window.d3AreaChart = (function (root) {
       .domain([0, dimension]);
 
     var now = new Date();
+    // set time scale
     var timeScale = d3.time.scale()
       .range([0, width])
-      .domain([now - 60000, now]);
+      .domain([now - (BUFFER_SIZE - 3) * TIME_SCALE_RANGE, now]);
 
     var xAxis = d3.svg.axis()
       .scale(timeScale)
-      .orient("bottom")
+      .orient("bottom");
 
     var area = d3.svg.area()
-      .x(function (d, i) { return xScale(i); })
+      //.x(function (d, i) { return xScale(i); })
+      .x(function (d, i) {return timeScale(new Date() - (BUFFER_SIZE - 2 - i) * TIME_SCALE_RANGE); })
       .y0(height)
       .y1(function (d) { return yScale(dimension - d); })
       .interpolate("basis");
