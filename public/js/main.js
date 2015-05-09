@@ -16,32 +16,24 @@
   var AreaChartMemory = AreaChart.appendChart({ color: "blue" });
 
   // D3 Pie Charts
-  var PieChartCpu = new d3PieChart(elPieChartCpu, {
-    backgroundArcStyle: { fill:  "#f69589", filter: "false" },
-    foregroundArcStyle: { fill: "#ffe0dc", filter: "false" },
-    indicatorStyle: { fill: "#ffe0dc", filter: "false" }
-  });
-  var PieChartMemory = new d3PieChart(elPieChartMemory, {
-    backgroundArcStyle: { fill: "#72d8eb", filter: "false" },
-    foregroundArcStyle: { fill: "#e2f0f3", filter: "false" },
-    indicatorStyle: { fill: "#e2f0f3", filter: "false" }
-  });
+  var PieChartCpu = new d3PieChart(elPieChartCpu, { color: "red" });
+  var PieChartMemory = new d3PieChart(elPieChartMemory, { color: "blue" });
 
   // Draw area charts
-  AreaChartCpu.draw().startTick();
-  AreaChartMemory.draw().startTick();
+  AreaChartCpu.startTick();
+  AreaChartMemory.startTick();
 
   // Draw pie charts
-  PieChartCpu.draw().updateBackground(1000);
-  PieChartMemory.draw().updateBackground(1000);
+  PieChartCpu.updateBackground();
+  PieChartMemory.updateBackground();
 
   // WebSocket
   var ws = new WebSocket("ws://" + loc.hostname + ":" + loc.port);
-  ws.onmessage = function (event) {
+  ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
-    PieChartMemory.updateTick(normalizePerc(data.mem), 1000);
-    PieChartCpu.updateTick(normalizePerc(data.cpu), 1000);
+    PieChartMemory.updateTick(normalizePerc(data.mem));
+    PieChartCpu.updateTick(normalizePerc(data.cpu));
 
     AreaChartMemory.setData(normalizePerc(data.mem));
     AreaChartCpu.setData(normalizePerc(data.cpu));

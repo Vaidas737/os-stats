@@ -1,0 +1,25 @@
+/**
+ *  Pie Chart Style
+ */
+
+.pie-chart text.indicator {
+  text-anchor: middle;
+  font-size: 38px;
+  font-weight: bold;
+}
+
+.pie-chart .red {
+  fill: #ffe0dc;
+}
+
+.pie-chart .blue {
+  fill: #e2f0f3
+}
+
+.pie-chart .background.red {
+  fill: #f69589;
+}
+
+.pie-chart .background.blue {
+  fill: #72d8eb;
+}

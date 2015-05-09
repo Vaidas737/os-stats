@@ -1,13 +1,17 @@
-.chart-area {
+/**
+ *  Area Chart Style
+ */
+
+.area-chart .area {
   stroke-width: 2px;
 }
 
-.chart-area.red {
+.area-chart .area.red {
   fill: rgba(241, 48, 26, 0.7);
   stroke: #ff5440;
 }
 
-.chart-area.blue {
+.area-chart .area.blue {
   fill: rgba(0, 168, 201, 0.7);
   stroke: #62d6eb;
 }
