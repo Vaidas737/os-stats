@@ -52,19 +52,19 @@ window.d3PieChart = (function (root) {
         .attr("class", "pie-chart")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    // Background
+    // Append background
     var background = svg.append("path")
       .datum({ endAngle: endAngle })
       .attr("class", "background " + color)
       .attr("d", backgroundArc);
 
-    // ForeGround
+    // Append foreground
     var foreground = svg.append("path")
       .datum({ endAngle: endAngle })
       .attr("class", "foreground " + color)
       .attr("d", foregroundArc);
 
-    // Indicator
+    // Append indicator
     var indicator = svg.append("text")
       .attr("class", "indicator " + color)
       .attr("transform", "translate(0, 15)")

@@ -9,17 +9,25 @@
 }
 
 .pie-chart .red {
-  fill: #ffe0dc;
+  fill: rgba(255, 210, 205, 1);
 }
 
 .pie-chart .blue {
-  fill: #e2f0f3
+  fill: rgba(206, 236, 242, 1);
 }
 
 .pie-chart .background.red {
-  fill: #f69589;
+  fill: #e86253;
 }
 
 .pie-chart .background.blue {
-  fill: #72d8eb;
+  fill: #3fc5df;
+}
+
+.pie-chart .indicator.red {
+  fill: #ffcbc5;
+}
+
+.pie-chart .indicator.blue {
+  fill: #d0edf2;
 }

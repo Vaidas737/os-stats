@@ -7,15 +7,19 @@
 }
 
 .area-chart .area.red {
-  fill: rgba(241, 48, 26, 0.7);
-  stroke: #ff5440;
+  fill: rgba(222, 46, 27, 0.5);
+  stroke: #e2462b;
 }
 
 .area-chart .area.blue {
-  fill: rgba(0, 168, 201, 0.7);
-  stroke: #62d6eb;
+  fill: rgba(23, 167, 201, 0.5);
+  stroke: #18bad5;
 }
 
-.area-chart .axis.x path {
+.area-chart .axis.x > path {
   fill: none;
+}
+
+.area-chart .axis.x > g > text {
+  fill: #b8bbc0;
 }

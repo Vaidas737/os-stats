@@ -12,16 +12,15 @@
 
   // D3 Area Charts
   var AreaChart = new d3AreaChart(elLineChart);
-  var AreaChartCpu = AreaChart.appendChart({ color: "red" });
-  var AreaChartMemory = AreaChart.appendChart({ color: "blue" });
+  var AreaChartCpu = AreaChart.appendPath({ color: "red" });
+  var AreaChartMemory = AreaChart.appendPath({ color: "blue" });
 
   // D3 Pie Charts
   var PieChartCpu = new d3PieChart(elPieChartCpu, { color: "red" });
   var PieChartMemory = new d3PieChart(elPieChartMemory, { color: "blue" });
 
   // Draw area charts
-  AreaChartCpu.startTick();
-  AreaChartMemory.startTick();
+  AreaChart.startTick();
 
   // Draw pie charts
   PieChartCpu.updateBackground();
