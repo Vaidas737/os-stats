@@ -6,12 +6,12 @@
   var d3AreaChart = root.d3AreaChart;
 
   // DOM elements
-  var elLineChart = doc.getElementById("line-chart");
+  var elAreaChart = doc.getElementById("area-chart");
   var elPieChartCpu = doc.getElementById("cpu-pie-chart");
   var elPieChartMemory = doc.getElementById("memory-pie-chart");
 
   // D3 Area Charts
-  var AreaChart = new d3AreaChart(elLineChart);
+  var AreaChart = new d3AreaChart(elAreaChart, { title: "OS Stats" });
   var AreaChartCpu = AreaChart.appendPath({ color: "red" });
   var AreaChartMemory = AreaChart.appendPath({ color: "blue" });
 
@@ -19,31 +19,29 @@
   var PieChartCpu = new d3PieChart(elPieChartCpu, { color: "red" });
   var PieChartMemory = new d3PieChart(elPieChartMemory, { color: "blue" });
 
-  // Draw area charts
+  // Animate area chart
   AreaChart.startTick();
 
-  // Draw pie charts
+  // Animate pie chart
   PieChartCpu.updateBackground();
   PieChartMemory.updateBackground();
+
+  function normalizePerc(perc) {
+    return Number(perc).toFixed(1);
+  }
 
   // WebSocket
   var ws = new WebSocket("ws://" + loc.hostname + ":" + loc.port);
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
+    // Update pie chart data
     PieChartMemory.updateTick(normalizePerc(data.mem));
     PieChartCpu.updateTick(normalizePerc(data.cpu));
 
+    // Update area chart data
     AreaChartMemory.setData(normalizePerc(data.mem));
     AreaChartCpu.setData(normalizePerc(data.cpu));
   };
-
-  /////////////////////////
-  //        Utils        //
-  /////////////////////////
-
-  function normalizePerc(perc) {
-    return Number( perc * 100 ).toFixed(1);
-  }
 
 })(window);

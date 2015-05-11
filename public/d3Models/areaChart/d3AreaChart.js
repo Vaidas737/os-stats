@@ -1,4 +1,4 @@
-window.d3AreaChart = (function (root) {
+window.d3AreaChart = (function(root) {
 
   var d3 = root.d3;
 
@@ -38,7 +38,7 @@ window.d3AreaChart = (function (root) {
      *  New data will be set to buffer on Path update.
      *
      * @param nd Value new data
-     * @returns {window.d3AreaChart.Path}
+     * @returns {Path}
      */
     this.setData = function(nd) {
       newData = nd;
@@ -49,7 +49,7 @@ window.d3AreaChart = (function (root) {
      * Path update.
      * Update path and buffer.
      *
-     * @returns {window.d3AreaChart.Path}
+     * @returns {Path}
      */
     this.update = function() {
 
@@ -77,29 +77,36 @@ window.d3AreaChart = (function (root) {
 
     var dimension = options.dimension || 100;
     var duration = options.duration || 1000; // in milliseconds
-    var margin = options.margin || { top: 20, right: 0, bottom: 20, left: 20 };
+    var margin = options.margin || { top: 10, right: 5, bottom: 20, left: 20 };
+    var title = options.title || "";
+    var titleMarginLeft = options.titleMarginLeft || 100;
+    var titleMarginTop = options.titleMarginTop || 50;
 
-    var width = el.clientWidth - margin.left;
-    var height = el.clientHeight - margin.top;
+    var width = el.clientWidth;
+    var height = el.clientHeight;
 
     var paths = [];
-
-    var yScale = d3.scale.linear()
-      .range([0, height])
-      .domain([0, dimension]);
 
     var xScale = d3.time.scale()
       .range([0, width])
       .domain(getTimeScaleDomain(duration));
 
+    var yScale = d3.scale.linear()
+      .range([margin.top, height - margin.bottom])
+      .domain([dimension, 0]);
+
     var xAxis = d3.svg.axis()
       .scale(xScale)
       .orient("bottom");
 
+    var yAxis = d3.svg.axis()
+      .scale(yScale)
+      .orient("left");
+
     var area = d3.svg.area()
       .x(function (d, i) { return xScale(getTickTime(duration, i)); })
-      .y0(height)
-      .y1(function (d) { return yScale(dimension - d); })
+      .y0(height - margin.bottom)
+      .y1(function (d) { return yScale(d); })
       .interpolate("basis");
 
     var svg = d3.select(el).append("svg")
@@ -115,19 +122,41 @@ window.d3AreaChart = (function (root) {
         .attr("width", width)
         .attr("height", height);
 
+    var titleGroup = svg.append("text")
+      .attr("x", (width / 2) - titleMarginLeft)
+      .attr("y", (height / 2) - titleMarginTop)
+      .attr("class", "title")
+      .text(title);
+
+    var areaGroup = svg.append("g")
+      .attr("clip-path", "url(#clip)");
+
     var xGroup = svg.append("g")
       .attr("class", "axis x")
       .attr("transform", "translate(0, " + (height - margin.bottom) + ")")
       .call(xAxis);
 
-    var areaGroup = svg.append("g")
-      .attr("clip-path", "url(#clip)")
-      .attr("transform", "translate(0, " + - margin.top +  ")");
+    var yGroup = svg.append("g")
+      .attr("class", "axis y")
+      .attr("transform", "translate(" + (width + margin.right) + ", 0)")
+      .call(yAxis)
+      .each(customizeYAxis);
 
     var transition = d3.select({})
       .transition()
       .duration(duration)
       .ease("linear");
+
+    function customizeYAxis() {
+      // NOTE: {this} refers to DOM element.
+      var g = d3.select(this).selectAll("g.tick");
+      g.each(function(d) {
+        var remove = [0, 10, 30, 40, 60, 70, 90];
+        if (remove.indexOf(d) != -1) {
+          d3.select(this).remove();
+        }
+      });
+    }
 
     function clearTimeScaleOverflow() {
       // NOTE: {this} refers to DOM element.
@@ -164,7 +193,7 @@ window.d3AreaChart = (function (root) {
     /**
      * Start animation.
      *
-     * @returns {window.d3AreaChart.AreaChart}
+     * @returns {AreaChart}
      */
     this.startTick = function() {
       tick();
@@ -175,7 +204,7 @@ window.d3AreaChart = (function (root) {
      * Append path to chart.
      *
      * @param pathOptions Object
-     * @returns {window.d3AreaChart.Path}
+     * @returns {Path}
      */
     this.appendPath = function (pathOptions) {
 

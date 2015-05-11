@@ -2,6 +2,11 @@
  *  Area Chart Style
  */
 
+.area-chart text.title {
+  fill: #b8bbc0;
+  font-size: 2.75em;
+}
+
 .area-chart .area {
   stroke-width: 2px;
 }
@@ -20,6 +25,12 @@
   fill: none;
 }
 
-.area-chart .axis.x > g > text {
+.area-chart .axis.y > path {
+  fill: none;
+}
+
+.area-chart .axis.x > g > text,
+.area-chart .axis.y > g > text {
   fill: #b8bbc0;
+  font-weight:bold;
 }

@@ -14,32 +14,15 @@ body {
   box-sizing: border-box;
 }
 
-/*******************
- *        UI       *
- ******************/
+/********************
+ *        UI        *
+ *******************/
 
 div#main {
   display: block;
   width: 100%;
   height: 100%;
   padding-top: 30px;
-
-  /*background-image: linear-gradient(to left, #272e37, #576578);*/
-  /*position: absolute;*/
-  /*top: 50%;*/
-  /*left: 50%;*/
-  /*margin-top: -500px;*/
-  /*margin-left: -600px;*/
-  /*background-image: linear-gradient(to left, #171a1f, #6b798f);*/
-  /*border-radius: 25px;*/
-}
-
-h1 {
-  color: #d4d7dc;
-  text-align: center;
-  font-weight: 100;
-  font-size: 2.75em;
-  margin: 0;
 }
 
 h2#memory-pie-chart-title,
@@ -47,52 +30,39 @@ h2#cpu-pie-chart-title {
   font-weight: 100;
   text-align: center;
   font-size: 2.75em;
-  /*text-shadow: 0.1em 0.1em 0.3em #4C5056;*/
   margin: 10px 0 0 0;
 }
 h2#memory-pie-chart-title { color: #d0edf2; }
 h2#cpu-pie-chart-title { color: #ffcbc5; }
 
-.line-chart-holder {
-  position: relative;
+.area-chart-holder {
   display: block;
   text-align: center;
-  width: 1200px;
-  height: 400px;
+  width: 100%;
+  height: 40%;
+  min-height: 300px;
   margin: 50px auto 0 auto;
 }
 
-#line-chart {
-  width: inherit;
-  height: inherit;
+#area-chart {
+  width: 50%;
+  min-width: 700px;
+  height: 100%;
+  margin: auto;
 }
 
-ul#status-charts {
-  position: relative;
+ul#pie-charts-holder {
   display: block;
   text-align: center;
-  height: 450px;
   list-style: none;
-  margin: 50px 0 0 0;
+  margin: 5% 0 0 0;
+  width: 100%;
   padding: 0;
 }
 
-ul#status-charts > li {
+ul#pie-charts-holder > li {
   display: inline-block;
   vertical-align: middle;
-  width: 320px;
-  height: 420px;
-  border-radius: 10px;
-  /*box-shadow: 0.4em 0.4em 1.5em #4C5056;*/
-  margin: 0 40px 0 40px;
-}
-
-#memory-pie-chart-holder {
-  /*background-image: linear-gradient(to left top, #02a8c9, #62d6eb);*/
-  /*border: 2px solid #67d9eb;*/
-}
-
-#cpu-pie-chart-holder {
-  /*background-image: linear-gradient(to left top, #f1311b, #ff5440);*/
-  /*border: 2px solid #fc553e;*/
+  width: 300px;
+  margin: 0 60px 0 60px;
 }

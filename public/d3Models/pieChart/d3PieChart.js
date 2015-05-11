@@ -1,4 +1,4 @@
-window.d3PieChart = (function (root) {
+window.d3PieChart = (function(root) {
 
   var d3 = root.d3;
 
@@ -15,14 +15,16 @@ window.d3PieChart = (function (root) {
 
     var backgroundWidth = options.backgroundWidth || 50;
     var backgroundMargin = options.backgroundMargin || 10;
+    var backgroundStartAngle = options.backgroundStartAngle || 0;
 
     var foregroundWidth = options.foregroundWidth || 50;
     var foregroundMargin = options.foregroundMargin || 0;
+    var foregroundStartAngle = options.foregroundStartAngle || 0;
 
     var charMargin = options.charMargin || 10;
 
-    var width = el.clientWidth - margin.left;
-    var height = el.clientWidth - margin.top;
+    var width = el.clientWidth;
+    var height = el.clientWidth;
 
     var value = 0;
     var p = 2 * Math.PI;
@@ -32,19 +34,16 @@ window.d3PieChart = (function (root) {
     // it will cause animation bug
     var endAngle = 0.0001;
 
-    // Background Arc
     var backgroundArc = d3.svg.arc()
       .innerRadius(r - backgroundMargin - backgroundWidth)
       .outerRadius(r - backgroundMargin)
-      .startAngle(0);
+      .startAngle(backgroundStartAngle);
 
-    // Foreground Arc
     var foregroundArc = d3.svg.arc()
       .innerRadius(r - foregroundMargin - foregroundWidth)
       .outerRadius(r - foregroundMargin)
-      .startAngle(0);
+      .startAngle(foregroundStartAngle);
 
-    // Canvas  
     var svg = d3.select(el).append("svg")
       .attr("width", width)
       .attr("height", height)
@@ -52,19 +51,16 @@ window.d3PieChart = (function (root) {
         .attr("class", "pie-chart")
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-    // Append background
     var background = svg.append("path")
       .datum({ endAngle: endAngle })
       .attr("class", "background " + color)
       .attr("d", backgroundArc);
 
-    // Append foreground
     var foreground = svg.append("path")
       .datum({ endAngle: endAngle })
       .attr("class", "foreground " + color)
       .attr("d", foregroundArc);
 
-    // Append indicator
     var indicator = svg.append("text")
       .attr("class", "indicator " + color)
       .attr("transform", "translate(0, 15)")
@@ -101,6 +97,11 @@ window.d3PieChart = (function (root) {
       });
     }
 
+    /**
+     * Update chart background
+     *
+     * @returns {PieChart}
+     */
     this.updateBackground = function() {
       background.transition()
         .duration(duration)
@@ -108,6 +109,12 @@ window.d3PieChart = (function (root) {
       return this;
     };
 
+    /**
+     * Update chart tick
+     *
+     * @param tickValue Number
+     * @returns {PieChart}
+     */
     this.updateTick = function(tickValue) {
       foreground.transition()
         .duration(duration)
