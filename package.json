@@ -9,6 +9,10 @@
       "url": ""
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Vaidas737/os-stats.git"
+  },
   "devDependencies": {
     "ws": "~0.7.1",
     "express": "~4.12.3"
