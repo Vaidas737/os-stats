@@ -1,15 +1,19 @@
 {
-  "name": "websocket_and_D3js",
+  "name": "os-stats",
   "version": "0.1.0",
-  "description": "Giving the try to the new generation technology ;)",
+  "description": "Cpu and memory monitoring tool",
+  "author": "Vaidas Keblys",
+  "license": [
+    {
+      "type": "MIT",
+      "url": ""
+    }
+  ],
   "devDependencies": {
     "ws": "~0.7.1",
-    "express": "~4.12.3",
-    "bower": "~1.4.1"
+    "express": "~4.12.3"
   },
   "scripts": {
     "start": "node server.js"
-  },
-  "author": "Vaidas",
-  "license": "None"
+  }
 }

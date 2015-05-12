@@ -1,9 +1,9 @@
 {
-  "name": "websocket_and_D3js",
+  "name": "os-stats",
   "version": "0.1.0",
-  "description": "Giving the try to the new generation technology ;)",
-  "license": "None",
+  "description": "Cpu and memory monitoring tool",
   "dependencies": {
     "d3": "~3.5.5"
-  }
+  },
+  "license":  "MIT"
 }
