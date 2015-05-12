@@ -1,7 +1,7 @@
 {
   "name": "os-stats",
   "version": "0.1.0",
-  "description": "Cpu and memory monitoring tool",
+  "description": "Cpu and memory monitoring app",
   "dependencies": {
     "d3": "~3.5.5"
   },

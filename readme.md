@@ -1,7 +1,7 @@
 # OS Stats
 This is simple cpu and memory monitoring app. It use [express.js](http://expressjs.com/) and [ws](http://einaros.github.io/ws/) for server with websocket support. And [d3.js](http://d3js.org/) library for dynamic client UI.
 
-Screenshot:
+### Screenshot:
 ![alt text](/img/osstats.jpg) 
 
 

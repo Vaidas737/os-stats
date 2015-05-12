@@ -1,14 +1,9 @@
 {
   "name": "os-stats",
   "version": "0.1.0",
-  "description": "Cpu and memory monitoring tool",
+  "description": "Cpu and memory monitoring app",
   "author": "Vaidas Keblys",
-  "license": [
-    {
-      "type": "MIT",
-      "url": ""
-    }
-  ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Vaidas737/os-stats.git"
