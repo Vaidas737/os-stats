@@ -116,7 +116,7 @@ window.d3AreaChart = (function(root) {
         .attr("class", "area-chart");
 
     // append clip path
-    svg.append("defs")
+    svg.append("defs").append("clipPath")
       .attr("id", "clip")
       .append("rect")
         .attr("width", width)
@@ -158,24 +158,13 @@ window.d3AreaChart = (function(root) {
       });
     }
 
-    function clearTimeScaleOverflow() {
-      // NOTE: {this} refers to DOM element.
-      var g = d3.select(this).selectAll("g.tick");
-      g.each(function() {
-        var n = d3.select(this);
-        var t = d3.transform(n.attr("transform"));
-        var x = t.translate[0];
-        if (x < 0) { n.remove(); }
-      });
-    }
-
     function update() {
 
       // update time scale
       xScale.domain(getTimeScaleDomain(duration));
 
       // slide time scale left
-      xGroup.call(xAxis).each(clearTimeScaleOverflow);
+      xGroup.call(xAxis);
 
       // redraw paths and slide left
       for (var i in paths) {
