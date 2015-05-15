@@ -23,6 +23,12 @@ window.d3AreaChart = (function(root) {
 
   /**
    * Path Object
+   *
+   * @param areaGroup d3 Object
+   * @param area d3 Object
+   * @param xScale d3 Object
+   * @param options Object
+   * @constructor
    */
   var Path = function(areaGroup, area, xScale, options) {
 
@@ -37,7 +43,7 @@ window.d3AreaChart = (function(root) {
      *  Set new data.
      *  New data will be set to buffer on Path update.
      *
-     * @param nd Value new data
+     * @param nd Value
      * @returns {Path}
      */
     this.setData = function(nd) {
@@ -69,7 +75,11 @@ window.d3AreaChart = (function(root) {
   };
 
   /**
-   * LineChart Object
+   *  LineChart Object
+   *
+   * @param el DOM element
+   * @param options Object
+   * @constructor
    */
   var AreaChart = function(el, options) {
 

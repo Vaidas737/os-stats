@@ -4,6 +4,10 @@ window.d3PieChart = (function(root) {
 
   /**
    * PieChart Object
+   *
+   * @param el DOM element
+   * @param options Object
+   * @constructor
    */
   function PieChart(el, options) {
 
