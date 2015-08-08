@@ -1,14 +1,9 @@
-(function(root) {
-
-  var doc = root.document;
-  var loc = doc.location;
-  var d3PieChart = root.d3PieChart;
-  var d3AreaChart = root.d3AreaChart;
+window.onload = function() {
 
   // DOM elements
-  var elAreaChart = doc.getElementById("area-chart");
-  var elPieChartCpu = doc.getElementById("cpu-pie-chart");
-  var elPieChartMemory = doc.getElementById("memory-pie-chart");
+  var elAreaChart = document.getElementById("area-chart");
+  var elPieChartCpu = document.getElementById("cpu-pie-chart");
+  var elPieChartMemory = document.getElementById("memory-pie-chart");
 
   // D3 Area Charts
   var AreaChart = new d3AreaChart(elAreaChart, { title: "OS Stats" });
@@ -31,17 +26,16 @@
   }
 
   // WebSocket
-  var ws = new WebSocket("ws://" + loc.hostname + ":" + loc.port);
+  var ws = new WebSocket("ws://" + document.location.hostname + ":" + document.location.port);
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 
     // Update pie chart data
     PieChartMemory.updateTick(normalizePerc(data.mem));
-    PieChartCpu.updateTick(normalizePerc(data.cpu));
+    PieChartCpu.updateTick(normalizePerc(data.cpu.total));
 
     // Update area chart data
     AreaChartMemory.setData(normalizePerc(data.mem));
-    AreaChartCpu.setData(normalizePerc(data.cpu));
+    AreaChartCpu.setData(normalizePerc(data.cpu.total));
   };
-
-})(window);
+};
