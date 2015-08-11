@@ -1,6 +1,5 @@
-window.d3PieChart = (function(root) {
-
-  var d3 = root.d3;
+window.PieChart = (function() {
+  if (typeof d3 !== "object") { throw new Error("missing d3.js library"); }
 
   /**
    * PieChart Object
@@ -10,12 +9,10 @@ window.d3PieChart = (function(root) {
    * @constructor
    */
   function PieChart(el, options) {
-
     options = options || {};
 
     var color = options.color || "";
     var duration = options.duration || 1000;
-    var margin = options.margin || { top: 20, right: 0, bottom: 0, left: 20 };
 
     var backgroundWidth = options.backgroundWidth || 50;
     var backgroundMargin = options.backgroundMargin || 10;
@@ -27,8 +24,8 @@ window.d3PieChart = (function(root) {
 
     var charMargin = options.charMargin || 10;
 
-    var width = el.clientWidth;
-    var height = el.clientWidth;
+    var width, height;
+    width = height = el.clientWidth;
 
     var value = 0;
     var p = 2 * Math.PI;
@@ -103,21 +100,17 @@ window.d3PieChart = (function(root) {
 
     /**
      * Update chart background
-     *
-     * @returns {PieChart}
      */
     this.updateBackground = function() {
       background.transition()
         .duration(duration)
         .call(backgroundArcTween, p);
-      return this;
     };
 
     /**
      * Update chart tick
      *
      * @param tickValue Number
-     * @returns {PieChart}
      */
     this.updateTick = function(tickValue) {
       foreground.transition()
@@ -127,9 +120,8 @@ window.d3PieChart = (function(root) {
         .duration(duration)
         .call(indicatorTween, value, tickValue);
       value = tickValue;
-      return this;
     };
   }
 
   return PieChart;
-})(window);
+})();

@@ -1,6 +1,5 @@
-window.d3AreaChart = (function(root) {
-
-  var d3 = root.d3;
+window.AreaChart = (function() {
+  if (typeof d3 !== "object") { throw new Error("missing d3.js library"); }
 
   var TIME_RANGE = 64;  // 60sec + 4sec = 64sec :)
 
@@ -31,7 +30,6 @@ window.d3AreaChart = (function(root) {
    * @constructor
    */
   var Path = function(areaGroup, area, xScale, options) {
-
     var buffer = generateBuffer();
     var newData = 0;
 
@@ -44,21 +42,16 @@ window.d3AreaChart = (function(root) {
      *  New data will be set to buffer on Path update.
      *
      * @param nd Value
-     * @returns {Path}
      */
     this.setData = function(nd) {
       newData = nd;
-      return this;
     };
 
     /**
      * Path update.
      * Update path and buffer.
-     *
-     * @returns {Path}
      */
     this.update = function() {
-
       // update buffer
       buffer.push(newData);
       buffer.shift();
@@ -69,8 +62,6 @@ window.d3AreaChart = (function(root) {
         .attr("transform", null)
         .transition()
           .attr("transform", "translate(" + xScale(getTickTime(options.duration)) + ", 0)");
-
-      return this;
     }
   };
 
@@ -82,7 +73,6 @@ window.d3AreaChart = (function(root) {
    * @constructor
    */
   var AreaChart = function(el, options) {
-
     options = options || {};
 
     var dimension = options.dimension || 100;
@@ -169,7 +159,6 @@ window.d3AreaChart = (function(root) {
     }
 
     function update() {
-
       // update time scale
       xScale.domain(getTimeScaleDomain(duration));
 
@@ -182,21 +171,14 @@ window.d3AreaChart = (function(root) {
       }
     }
 
-    function tick() {
+    /**
+     * Start animation tick.
+     */
+    this.startTick = function tick() {
       transition = transition
         .each(update)
         .transition()
           .each("start", tick);
-    }
-
-    /**
-     * Start animation.
-     *
-     * @returns {AreaChart}
-     */
-    this.startTick = function() {
-      tick();
-      return this;
     };
 
     /**
@@ -206,7 +188,6 @@ window.d3AreaChart = (function(root) {
      * @returns {Path}
      */
     this.appendPath = function (pathOptions) {
-
       pathOptions = pathOptions || {};
       pathOptions.color = pathOptions.color || "";
       pathOptions.duration = duration;
@@ -218,4 +199,4 @@ window.d3AreaChart = (function(root) {
   };
 
   return AreaChart;
-})(window);
+})();

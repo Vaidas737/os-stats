@@ -6,20 +6,20 @@ window.onload = function() {
   var elPieChartMemory = document.getElementById("memory-pie-chart");
 
   // D3 Area Charts
-  var AreaChart = new d3AreaChart(elAreaChart, { title: "OS Stats" });
-  var AreaChartCpu = AreaChart.appendPath({ color: "red" });
-  var AreaChartMemory = AreaChart.appendPath({ color: "blue" });
+  var areaChart = new AreaChart(elAreaChart, { title: "OS Stats" });
+  var areaChartCpu = areaChart.appendPath({ color: "red" });
+  var areaChartMemory = areaChart.appendPath({ color: "blue" });
 
   // D3 Pie Charts
-  var PieChartCpu = new d3PieChart(elPieChartCpu, { color: "red" });
-  var PieChartMemory = new d3PieChart(elPieChartMemory, { color: "blue" });
+  var pieChartCpu = new PieChart(elPieChartCpu, { color: "red" });
+  var pieChartMemory = new PieChart(elPieChartMemory, { color: "blue" });
 
   // Animate area chart
-  AreaChart.startTick();
+  areaChart.startTick();
 
   // Animate pie chart
-  PieChartCpu.updateBackground();
-  PieChartMemory.updateBackground();
+  pieChartCpu.updateBackground();
+  pieChartMemory.updateBackground();
 
   function normalizePerc(perc) {
     return Number(perc).toFixed(1);
@@ -31,11 +31,11 @@ window.onload = function() {
     var data = JSON.parse(event.data);
 
     // Update pie chart data
-    PieChartMemory.updateTick(normalizePerc(data.mem));
-    PieChartCpu.updateTick(normalizePerc(data.cpu.total));
+    pieChartMemory.updateTick(normalizePerc(data.mem));
+    pieChartCpu.updateTick(normalizePerc(data.cpu.total));
 
     // Update area chart data
-    AreaChartMemory.setData(normalizePerc(data.mem));
-    AreaChartCpu.setData(normalizePerc(data.cpu.total));
+    areaChartMemory.setData(normalizePerc(data.mem));
+    areaChartCpu.setData(normalizePerc(data.cpu.total));
   };
 };
