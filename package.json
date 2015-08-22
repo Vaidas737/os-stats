@@ -9,7 +9,7 @@
     "url": "https://github.com/Vaidas737/os-stats.git"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node bin/www"
   },
   "dependencies": {
     "ws": "~0.7.1",
