@@ -1,6 +1,6 @@
 {
   "name": "os-stats",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Cpu and memory monitoring app",
   "author": "Vaidas Keblys",
   "license": "MIT",
