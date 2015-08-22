@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+var app = require("../server/app");
+var config = require("../server/config");
+var http = require("http");
+
+var server = http.createServer(app.app);
+var wss = app.websocket(server, config.freq);
+
+// listen on provided port
+server.listen(config.port, function() {
+  var host = server.address().address;
+  var port = server.address().port;
+
+  console.log("Server listening at http://%s:%s", host, port);
+});
